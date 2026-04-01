@@ -19,10 +19,30 @@ jobs:
         with:
           java-version: 17
 
+      - name: Create google-services.json
+        shell: bash
+        run: |
+          cat > app/google-services.json <<'EOF'
+          ${{ secrets.GOOGLE_SERVICES_JSON }}
+          EOF
+
+      - name: Check google-services.json
+        shell: bash
+        run: |
+          if [ -f app/google-services.json ]; then
+            echo "google-services.json exists"
+            ls -l app/google-services.json
+            wc -c app/google-services.json
+          else
+            echo "google-services.json is missing"
+            exit 1
+          fi
+
       - name: Build
         run: |
           chmod +x ./gradlew
           ./gradlew build
+
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
