@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -38,22 +39,25 @@ class PostViewModel @Inject constructor(
     private val repository: PostRepository,
     auth: AppAuth,
 ) : ViewModel() {
+
     val data: LiveData<FeedModel> = auth.authStateFlow
         .flatMapLatest { (myId, _) ->
             repository.data
                 .map { posts ->
                     FeedModel(
-                        posts.map { it.copy(ownedByMe = it.authorId == myId) },
-                        posts.isEmpty()
+                        posts = posts.map { it.copy(ownedByMe = it.authorId == myId) },
+                        empty = posts.isEmpty(),
                     )
                 }
-        }.asLiveData(Dispatchers.Default)
+        }
+        .asLiveData(Dispatchers.Default)
 
     private val _dataState = MutableLiveData<FeedModelState>()
     val dataState: LiveData<FeedModelState>
         get() = _dataState
 
     private val edited = MutableLiveData(empty)
+
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>
         get() = _postCreated
@@ -63,7 +67,14 @@ class PostViewModel @Inject constructor(
         get() = _photo
 
     init {
-        loadPosts()
+        viewModelScope.launch {
+            auth.authStateFlow
+                .map { it.id to it.token }
+                .distinctUntilChanged()
+                .collect {
+                    loadPosts()
+                }
+        }
     }
 
     fun loadPosts() = viewModelScope.launch {
@@ -87,13 +98,13 @@ class PostViewModel @Inject constructor(
     }
 
     fun save() {
-        edited.value?.let {
+        edited.value?.let { post ->
             viewModelScope.launch {
                 try {
                     repository.save(
-                        it, _photo.value?.uri?.let { MediaUpload(it.toFile()) }
+                        post,
+                        _photo.value?.uri?.let { MediaUpload(it.toFile()) }
                     )
-
                     _postCreated.value = Unit
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -110,9 +121,7 @@ class PostViewModel @Inject constructor(
 
     fun changeContent(content: String) {
         val text = content.trim()
-        if (edited.value?.content == text) {
-            return
-        }
+        if (edited.value?.content == text) return
         edited.value = edited.value?.copy(content = text)
     }
 
