@@ -67,7 +67,6 @@ class PostRepositoryImpl @Inject constructor(
             val postWithAttachment = upload?.let {
                 upload(it)
             }?.let {
-                // TODO: add support for other types
                 post.copy(attachment = Attachment(it.id, AttachmentType.IMAGE))
             }
             val response = apiService.save(postWithAttachment ?: post)

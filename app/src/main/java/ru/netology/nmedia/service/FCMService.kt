@@ -17,6 +17,7 @@ class FCMService : FirebaseMessagingService() {
     private val content = "content"
     private val channelId = "remote"
     private val gson = Gson()
+
     @Inject
     lateinit var auth: AppAuth
 
@@ -35,7 +36,6 @@ class FCMService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        // TODO: replace this in homework
         println(message.data["content"])
     }
 
