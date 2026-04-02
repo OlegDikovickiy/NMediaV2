@@ -30,7 +30,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             manifestPlaceholders["usesCleartextTraffic"] = false
             buildConfigField("String", "BASE_URL", "\"https://netomedia.ru\"")
         }
@@ -39,6 +42,7 @@ android {
             buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:9999\"")
         }
     }
+
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
@@ -75,5 +79,6 @@ dependencies {
     implementation(libs.ucrop)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation("androidx.paging:paging-runtime-ktx:3.3.2")
     coreLibraryDesugaring(libs.desugaring)
 }
