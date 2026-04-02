@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
+import ru.netology.nmedia.adapter.PostsLoadStateAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -59,7 +60,9 @@ class FeedFragment : Fragment() {
             }
         })
 
-        binding.list.adapter = adapter
+        binding.list.adapter = adapter.withLoadStateFooter(
+            footer = PostsLoadStateAdapter(),
+        )
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.data.collectLatest(adapter::submitData)
@@ -67,8 +70,11 @@ class FeedFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { state ->
-                binding.progress.isVisible = state.refresh is LoadState.Loading
-                binding.swiperefresh.isRefreshing = state.refresh is LoadState.Loading
+                val isRefreshing = state.refresh is LoadState.Loading && adapter.itemCount > 0
+                val isInitialLoading = state.refresh is LoadState.Loading && adapter.itemCount == 0
+
+                binding.swiperefresh.isRefreshing = isRefreshing
+                binding.progress.isVisible = isInitialLoading
                 binding.emptyText.isVisible =
                     state.refresh is LoadState.NotLoading && adapter.itemCount == 0
 

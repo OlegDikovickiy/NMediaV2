@@ -1,57 +1,72 @@
 [versions]
-agp = "8.13.1"
-converterGson = "3.0.0"
-glide = "5.0.5"
-imagepicker = "2.1"
-kotlin = "2.3.0"
-kotlinxCoroutinesAndroid = "1.10.2"
-ksp = "2.3.4"
-googleServices = "4.4.4"
-coreKtx = "1.17.0"
-appcompat = "1.7.1"
-loggingInterceptor = "5.3.2"
-material = "1.13.0"
-activity = "1.12.2"
+agp = "8.7.3"
+kotlin = "2.2.20"
+ksp = "2.2.20-2.0.3"
+hilt = "2.58"
+
+androidxCore = "1.15.0"
+appcompat = "1.7.0"
+material = "1.12.0"
+activity = "1.10.1"
 constraintlayout = "2.2.1"
-gson = "2.13.2"
-navigationFragmentKtx = "2.9.6"
-navigationUiKtx = "2.9.6"
-room = "2.8.4"
-firebase = "34.7.0"
-playServices = "18.10.0"
+gson = "2.11.0"
+navigation = "2.8.9"
+room = "2.7.2"
+firebaseBom = "33.15.0"
+playServices = "18.7.0"
+retrofit = "2.11.0"
+okhttpLogging = "4.12.0"
+glide = "4.16.0"
+coroutines = "1.10.2"
+swiperefreshlayout = "1.1.0"
+imagepicker = "2.1"
+ucrop = "2.2.10"
+paging = "3.3.2"
 desugaring = "2.1.5"
-swiperefreshlayout = "1.2.0"
-ucrop = "2.2.11"
-dagger = "2.57.2"
 
 [libraries]
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
+
+play-services = { module = "com.google.android.gms:play-services-base", version.ref = "playServices" }
+
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttpLogging" }
+
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
-imagepicker = { module = "com.github.dhaval2404:imagepicker", version.ref = "imagepicker" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
-androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
-androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
-play-services = { group = "com.google.android.gms", name = "play-services-base", version.ref = "playServices" }
-desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugaring" }
+
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+
+imagepicker = { module = "com.github.Dhaval2404:ImagePicker", version.ref = "imagepicker" }
 ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
+
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+
+desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugaring" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.2" }
+dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

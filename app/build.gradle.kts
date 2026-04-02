@@ -63,13 +63,19 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.gson)
+
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.room)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
     ksp(libs.androidx.room.compiler)
-    implementation(platform(libs.firebase))
+
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
     implementation(libs.play.services)
+
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
     implementation(libs.glide)
@@ -77,8 +83,11 @@ dependencies {
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.imagepicker)
     implementation(libs.ucrop)
+
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    implementation("androidx.paging:paging-runtime-ktx:3.3.2")
+
+    implementation(libs.androidx.paging.runtime.ktx)
+
     coreLibraryDesugaring(libs.desugaring)
 }
