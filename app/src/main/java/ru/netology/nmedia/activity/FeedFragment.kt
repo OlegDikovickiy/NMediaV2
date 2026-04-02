@@ -60,7 +60,8 @@ class FeedFragment : Fragment() {
             }
         })
 
-        binding.list.adapter = adapter.withLoadStateFooter(
+        binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = PostsLoadStateAdapter(),
             footer = PostsLoadStateAdapter(),
         )
 
@@ -70,16 +71,19 @@ class FeedFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { state ->
-                val isRefreshing = state.refresh is LoadState.Loading && adapter.itemCount > 0
-                val isInitialLoading = state.refresh is LoadState.Loading && adapter.itemCount == 0
+                val isInitialLoading =
+                    state.refresh is LoadState.Loading && adapter.itemCount == 0
+                val isRefreshing =
+                    state.refresh is LoadState.Loading && adapter.itemCount > 0
 
-                binding.swiperefresh.isRefreshing = isRefreshing
                 binding.progress.isVisible = isInitialLoading
+                binding.swiperefresh.isRefreshing = isRefreshing
                 binding.emptyText.isVisible =
                     state.refresh is LoadState.NotLoading && adapter.itemCount == 0
 
                 val errorState = when {
                     state.refresh is LoadState.Error -> state.refresh as LoadState.Error
+                    state.prepend is LoadState.Error -> state.prepend as LoadState.Error
                     state.append is LoadState.Error -> state.append as LoadState.Error
                     else -> null
                 }
